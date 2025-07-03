@@ -73,7 +73,12 @@ function calculateStreak(datesMap) {
 // --- Supabase Operations ---
 
 async function fetchHabits() {
-  const { data, error } = await supabase.from('habits').select('*');
+  const { data: { user } } = await supabase.auth.getUser();
+  const { data, error } = await supabase
+    .from('habits')
+    .select('*')
+    .eq('user_id', user.id);
+
   if (error) {
     console.error('Error fetching habits:', error.message);
     return;
@@ -82,8 +87,15 @@ async function fetchHabits() {
   renderHabits();
 }
 
+
 async function createHabit(name) {
-  const { data, error } = await supabase.from('habits').insert([{ name, dates: {} }]).select().single();
+  const { data: { user } } = await supabase.auth.getUser();
+  const { data, error } = await supabase
+    .from('habits')
+    .insert([{ name, dates: {}, user_id: user.id }])
+    .select()
+    .single();
+
   if (error) {
     console.error('Error adding habit:', error.message);
     return;
@@ -93,14 +105,26 @@ async function createHabit(name) {
 }
 
 async function updateHabit(habit) {
-  const { error } = await supabase.from('habits').update(habit).eq('id', habit.id);
+  const { data: { user } } = await supabase.auth.getUser();
+  const { error } = await supabase
+    .from('habits')
+    .update(habit)
+    .eq('id', habit.id)
+    .eq('user_id', user.id);
+
   if (error) {
     console.error('Error updating habit:', error.message);
   }
 }
 
 async function deleteHabit(id) {
-  const { error } = await supabase.from('habits').delete().eq('id', id);
+  const { data: { user } } = await supabase.auth.getUser();
+  const { error } = await supabase
+    .from('habits')
+    .delete()
+    .eq('id', id)
+    .eq('user_id', user.id);
+
   if (error) {
     console.error('Error deleting habit:', error.message);
     return;
