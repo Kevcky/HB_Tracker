@@ -1,1 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Habit Tracker MVP</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+body {
+  background: #111;
+  color: #fff;
+  font-family: 'Helvetica Neue', sans-serif;
+  padding: 1rem;
+  max-width: 600px;
+  margin: auto;
+}
 
+h1 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  text-align: center;
+  color: #eee;
+}
+
+input, #addHabit {
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: none;
+  margin-top: 0.5rem;
+  font-size: 1rem;
+}
+
+#habitList {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.habit {
+  background: #1e1e1e;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+.habit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.habit-header .name {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #fff;
+}
+
+.habit-header .actions button {
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-left: 6px;
+  transition: color 0.2s ease;
+}
+
+.habit-header .actions button:hover {
+  color: #ff5e5e;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(6, 20px);
+  gap: 6px;
+  margin: 0.75rem 0;
+}
+
+.grid-cell {
+  width: 20px;
+  height: 20px;
+  background-color: #333;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.grid-cell:hover {
+  background-color: #555;
+}
+
+.grid-cell.checked {
+  background-color: #ff5e5e;
+}
+
+.grid-cell.today {
+  border: 2px solid #fff;
+}
+  </style>
+</head>
+<body>
+  <h1>Habit Tracker MVP</h1>
+
+  <!-- 🔐 Auth section -->
+  <div id="authSection" style="margin-bottom: 1rem;">
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Password" />
+    <button id="signUp">Sign Up</button>
+    <button id="signIn">Sign In</button>
+    <button id="signOut" style="display: none;">Sign Out</button>
+  </div>
+
+  <!-- ➕ Habit creation -->
+  <input type="text" id="habitInput" placeholder="New habit" />
+  <button id="addHabit">Add</button>
+
+  <div id="habitList"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
